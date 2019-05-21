@@ -102,10 +102,9 @@ set visualbell "ビープ音を視覚表示
 "----------------------------------------------------------
 
 "molokai
-let g:molokai_original = 1
+"let g:molokai_original = 1
 
 colorscheme molokai
-set t_Co=256
 
 set t_Co=256 " iTerm2など既に256色環境なら無くても良い
 syntax enable " 構文に色を付ける
