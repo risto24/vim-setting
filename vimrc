@@ -124,7 +124,6 @@ imap <C-d> <Del>
 "----------------------------------------------------------
 " ステータスライン
 "----------------------------------------------------------
-set laststatus=1
 "set ambiwidth=double
 let g:airline_left_sep = '⮀'
 let g:airline_left_alt_sep = '⮁'
