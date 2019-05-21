@@ -23,7 +23,7 @@ if dein#load_state('~/.vim/dein')
   " molokaiシンタックス
   call dein#add('tomasr/molokai')
   " ステータスラインの表示内容強化
-  call dein#add('itchyny/lightline.vim')
+  "call dein#add('itchyny/lightline.vim')
   " インデントの可視化
   call dein#add('Yggdroot/indentLine')
   " 末尾の全角半角空白文字を赤くハイライト
