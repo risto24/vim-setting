@@ -1,0 +1,308 @@
+"dein Scripts-----------------------------
+if &compatible
+  set nocompatible               " Be iMproved
+endif
+
+" Required:
+set runtimepath+=/Users/nishimurarisuto/.vim/dein/repos/github.com/Shougo/dein.vim
+
+" Required:
+if dein#load_state('/Users/nishimurarisuto/.vim/dein')
+  call dein#begin('/Users/nishimurarisuto/.vim/dein')
+
+  " Let dein manage dein
+  " Required:
+  call dein#add('/Users/nishimurarisuto/.vim/dein/repos/github.com/Shougo/dein.vim')
+
+  " Add or remove your plugins here like this:
+  call dein#add('Shougo/neosnippet.vim')
+  call dein#add('Shougo/neosnippet-snippets')
+
+  " 導入プラグイン
+  call dein#add('simeji/winresizer')
+  " molokaiシンタックス
+  call dein#add('tomasr/molokai')
+  " ステータスラインの表示内容強化
+  call dein#add('itchyny/lightline.vim')
+  " インデントの可視化
+  call dein#add('Yggdroot/indentLine')
+  " 末尾の全角半角空白文字を赤くハイライト
+  call dein#add('bronson/vim-trailing-whitespace')
+  " 構文エラーチェック
+  call dein#add('scrooloose/syntastic')
+  " 多機能セレクタ
+  call dein#add('ctrlpvim/ctrlp.vim')
+  " ファイルツリー
+  call dein#add('scrooloose/nerdtree')
+  " emmet
+  call dein#add('mattn/emmet-vim')
+  " cssシンタックスカラー
+  call dein#add('hail2u/vim-css3-syntax')
+  " htmlシンタックスカラー
+  call dein#add('othree/html5.vim')
+  " jsonファイル表示用
+  call dein#add('elzr/vim-json')
+  " javascript予測変換
+  call dein#add('pangloss/vim-javascript')
+  call dein#add('crusoexia/vim-javascript-lib')
+  " 括弧自動補完
+  call dein#add('Townk/vim-autoclose')
+  call dein#add('scrooloose/syntastic')
+  call dein#add('airblade/vim-gitgutter')
+  " ステータスバー表示強化
+  call dein#add('vim-airline/vim-airline')
+  call dein#add('vim-airline/vim-airline-themes')
+  call dein#add('tpope/vim-fugitive')
+
+  " Required:
+  call dein#end()
+  call dein#save_state()
+endif
+
+" Required:
+filetype plugin indent on
+syntax enable
+
+" If you want to install not installed plugins on startup.
+if dein#check_install()
+  call dein#install()
+endif
+
+if has('lua')
+   "自動補間
+   call dein#add('Shougo/neocomplete.vim')
+    " スニペットの補完機能
+     call dein#add('Shougo/neosnippet')
+    " スニペット集
+   call dein#add('Shougo/neosnippet-snippets')
+endif
+
+"End dein Scripts-------------------------
+
+set encoding=utf-8
+  scriptencoding utf-8
+" ↑1行目は読み込み時の文字コードの設定
+" ↑2行目はVim Script内でマルチバイトを使う場合の設定
+" Vim scritptにvimrcも含まれるので、日本語でコメントを書く場合は先頭にこの設定が必要になる
+
+" クリップボード連携
+set clipboard=unnamed,autoselect
+
+" バックアップファイルを作らない
+set nobackup
+" スワップファイルを作らない
+set noswapfile
+" エラーメッセージの表示時にビープを鳴らさない
+set noerrorbells
+set visualbell "ビープ音を視覚表示
+
+
+"----------------------------------------------------------
+" カラースキーム
+"----------------------------------------------------------
+
+"molokai
+let g:molokai_original = 1
+
+colorscheme molokai
+set t_Co=256
+
+set t_Co=256 " iTerm2など既に256色環境なら無くても良い
+syntax enable " 構文に色を付ける
+set termguicolors
+let g:javascript_plugin_jsdoc = 1
+let g:javascript_plugin_ngdoc = 1
+let g:javascript_plugin_flow = 1
+
+
+"----------------------------------------------------------
+" キーバインド
+"----------------------------------------------------------
+
+imap <C-d> <Del>
+
+"----------------------------------------------------------
+" ステータスライン
+"----------------------------------------------------------
+set laststatus=1
+"set ambiwidth=double
+let g:airline_left_sep = '⮀'
+let g:airline_left_alt_sep = '⮁'
+let g:airline_right_sep = '⮂'
+let g:airline_right_alt_sep = '⮃'
+let g:airline_theme = 'dark'  "テーマ
+let g:airline_powerline_fonts = 1
+"let g:airline#extensions#tabline#enabled = 1  "上表示
+let g:airline#extensions#tabline#buffer_idx_mode = 1
+let g:airline#extensions#virtualenv#enabled = 1
+"----------------------------------------------------------
+" 文字
+"----------------------------------------------------------
+set fileencoding=utf-8 " 保存時の文字コード
+set fileencodings=ucs-boms,utf-8,euc-jp,cp932 " 読み込み時の文字コードの自動判別. 左側が優先される
+set fileformats=unix,dos,mac " 改行コードの自動判別. 左側が優先される
+set ambiwidth=double " □や○文字が崩れる問題を解決
+set list
+set listchars=tab:»-,trail:-,extends:»,precedes:«,nbsp:%
+
+"----------------------------------------------------------
+" ステータスライン
+"----------------------------------------------------------
+set laststatus=2 " ステータスラインを常に表示
+set showmode " 現在のモードを表示
+set showcmd " 打ったコマンドをステータスラインの下に表示
+set ruler " ステータスラインの右側にカーソルの位置を表示する
+
+
+"----------------------------------------------------------
+" コマンドモード
+"----------------------------------------------------------
+set wildmenu " コマンドモードの補完
+set history=5000 " 保存するコマンド履歴の数
+
+
+"----------------------------------------------------------
+" タブ・インデント
+"----------------------------------------------------------
+set expandtab " タブ入力を複数の空白入力に置き換える
+set tabstop=2 " 画面上でタブ文字が占める幅
+set softtabstop=2 " 連続した空白に対してタブキーやバックスペースキーでカーソルが動く幅
+set autoindent " 改行時に前の行のインデントを継続する
+set smartindent " 改行時に前の行の構文をチェックし次の行のインデントを増減する
+set shiftwidth=2 " smartindentで増減する幅
+
+"タブ、空白、改行の可視化
+set list
+set listchars=tab:->,
+
+"----------------------------------------------------------
+" 文字列検索
+"----------------------------------------------------------
+set incsearch " インクリメンタルサーチ. １文字入力毎に検索を行う
+set ignorecase " 検索パターンに大文字小文字を区別しない
+set smartcase " 検索パターンに大文字を含んでいたら大文字小文字を区別する
+set hlsearch " 検索結果をハイライト
+
+" ESCキー2度押しでハイライトの切り替え
+nnoremap <silent><Esc><Esc> :<C-u>set nohlsearch!<CR>
+
+
+
+"----------------------------------------------------------
+" カーソル
+"----------------------------------------------------------
+set number " 行番号を表示
+"set cursorline " カーソルラインをハイライト
+
+" バックスペースキーの有効化
+set backspace=indent,eol,start
+let &t_EI .= "\e[1 q" "カーソル形状変更
+
+"マウス操作の許可
+set mouse=a
+
+"----------------------------------------------------------
+" カッコ・タグの対応
+"----------------------------------------------------------
+set showmatch " 括弧の対応関係を一瞬表示する
+source $VIMRUNTIME/macros/matchit.vim " Vimの「%」を拡張する
+set matchpairs& matchpairs+=<:> " 対応括弧に<と>のペアを追加
+
+
+"----------------------------------------------------------
+" クリップボード設定
+"----------------------------------------------------------
+set clipboard=unnamed,autoselect
+
+"----------------------------------------------------------
+" neocomplete・neosnippetの設定
+"----------------------------------------------------------
+    " Vim起動時にneocompleteを有効にする
+    let g:neocomplete#enable_at_startup = 1
+    " smartcase有効化. 大文字が入力されるまで大文字小文字の区別を無視する
+    let g:neocomplete#enable_smart_case = 1
+    " 3文字以上の単語に対して補完を有効にする
+    let g:neocomplete#min_keyword_length = 3
+    " 区切り文字まで補完する
+    let g:neocomplete#enable_auto_delimiter = 1
+    " 1文字目の入力から補完のポップアップを表示
+    let g:neocomplete#auto_completion_start_length = 1
+    " バックスペースで補完のポップアップを閉じる
+    inoremap <expr><BS> neocomplete#smart_close_popup()."<C-h>"
+
+    " エンターキーで補完候補の確定. スニペットの展開もエンターキーで確定
+    imap <expr><CR> neosnippet#expandable() ? "<Plug>(neosnippet_expand_or_jump)" : pumvisible() ? "<C-y>" : "<CR>"
+    " タブキーで補完候補の選択. スニペット内のジャンプもタブキーでジャンプ
+    imap <expr><TAB> pumvisible() ? "<C-n>" : neosnippet#jumpable() ? "<Plug>(neosnippet_expand_or_jump)" : "<TAB>"
+
+
+
+
+"----------------------------------------------------------
+" Syntastic
+"----------------------------------------------------------
+" 構文エラー行に「>>」を表示
+let g:syntastic_enable_signs = 1
+" 他のVimプラグインと競合するのを防ぐ
+let g:syntastic_always_populate_loc_list = 1
+" ファイルを開いた時に構文エラーチェックを実行する
+let g:syntastic_check_on_open = 1
+"「:wq」で終了する時も構文エラーチェックする
+let g:syntastic_check_on_wq = 1
+
+
+"----------------------------------------------------------
+" indentLine
+"----------------------------------------------------------
+"let g:indentLine_color_term = 111
+"let g:indentLine_color_gui = '#696969'
+let g:indentLine_char = '¦'
+
+"----------------------------------------------------------
+" HTMLおよび括弧の自動補完
+"----------------------------------------------------------
+augroup MyXML
+  autocmd!
+  autocmd Filetype xml inoremap <buffer> </ </<C-x><C-o>
+  autocmd Filetype html inoremap <buffer> </ </<C-x><C-o>
+augroup END
+
+inoremap {<Enter> {}<Left><CR><ESC><S-o>
+inoremap [<Enter> []<Left><CR><ESC><S-o>
+inoremap (<Enter> ()<Left><CR><ESC><S-o>
+
+
+"----------------------------------------------------------
+"emmet-vim
+"----------------------------------------------------------
+let g:user_emmet_leader_key='<c-l>'
+
+"----------------------------------------------------------
+"elzr/vim-json
+"----------------------------------------------------------
+let g:vim_json_syntax_conceal = 0
+
+"----------------------------------------------------------
+" neadtree
+"----------------------------------------------------------
+map <C-n> :NERDTreeToggle<CR>
+let NERDTreeShowHidden = 1
+
+"----------------------------------------------------------
+" シンタックス
+"----------------------------------------------------------
+let g:syntastic_check_on_open=0 "ファイルを開いたときはチェックしない
+let g:syntastic_check_on_save=1 "保存時にはチェック
+let g:syntastic_check_on_wq = 1 " wqでもチェック
+let g:syntastic_auto_loc_list=1 "エラーがあったら自動でロケーションリストを開く
+let g:syntastic_loc_list_height=6 "エラー表示ウィンドウの高さ
+set statusline+=%#warningmsg# "エラーメッセージの書式
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+let g:syntastic_javascript_checkers = ['eslint'] "ESLintを使う
+let g:syntastic_mode_map = {
+      \ 'mode': 'active',
+      \ 'active_filetypes': ['javascript'],
+      \ 'passive_filetypes': []
+      \ }
+
