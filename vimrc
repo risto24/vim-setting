@@ -284,7 +284,7 @@ let g:vim_json_syntax_conceal = 0
 "----------------------------------------------------------
 " neadtree
 "----------------------------------------------------------
-map <C-n> :NERDTreeToggle<CR>
+map <C-e> :NERDTreeToggle<CR>
 let NERDTreeShowHidden = 1
 
 "----------------------------------------------------------
@@ -305,3 +305,7 @@ let g:syntastic_mode_map = {
       \ 'passive_filetypes': []
       \ }
 
+"----------------------------------------------------------
+" winresizer
+"----------------------------------------------------------
+let g:winresizer_start_key = '<C-m>'
