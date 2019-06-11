@@ -86,7 +86,6 @@ endif
 
 " クリップボード連携
 set clipboard=unnamed,autoselect
-
 " バックアップファイルを作らない
 set nobackup
 " スワップファイルを作らない
@@ -99,10 +98,6 @@ set visualbell "ビープ音を視覚表示
 "----------------------------------------------------------
 " カラースキーム
 "----------------------------------------------------------
-
-"molokai
-"let g:molokai_original = 1
-
 colorscheme molokai
 
 set t_Co=256 " iTerm2など既に256色環境なら無くても良い
@@ -116,7 +111,6 @@ let g:javascript_plugin_flow = 1
 "----------------------------------------------------------
 " キーバインド
 "----------------------------------------------------------
-
 "imap <C-d> <Del>
 
 "----------------------------------------------------------
@@ -133,6 +127,7 @@ let g:airline_powerline_fonts = 1
 let g:airline#extensions#tabline#buffer_idx_mode = 1
 let g:airline#extensions#virtualenv#enabled = 1
 let g:airline_symbols = { 'dirty': '' }
+
 "----------------------------------------------------------
 " 文字
 "----------------------------------------------------------
@@ -150,7 +145,6 @@ set laststatus=2 " ステータスラインを常に表示
 set showmode " 現在のモードを表示
 set showcmd " 打ったコマンドをステータスラインの下に表示
 set ruler " ステータスラインの右側にカーソルの位置を表示する
-
 
 "----------------------------------------------------------
 " コマンドモード
@@ -183,8 +177,6 @@ set hlsearch " 検索結果をハイライト
 
 " ESCキー2度押しでハイライトの切り替え
 nnoremap <silent><Esc><Esc> :<C-u>set nohlsearch!<CR>
-
-
 
 "----------------------------------------------------------
 " カーソル
@@ -227,9 +219,6 @@ imap <expr><CR> neosnippet#expandable() ? "<Plug>(neosnippet_expand_or_jump)" : 
 " タブキーで補完候補の選択. スニペット内のジャンプもタブキーでジャンプ
 imap <expr><TAB> pumvisible() ? "<C-n>" : neosnippet#jumpable() ? "<Plug>(neosnippet_expand_or_jump)" : "<TAB>"
 
-
-
-
 "----------------------------------------------------------
 " Syntastic
 "----------------------------------------------------------
@@ -241,7 +230,6 @@ let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_check_on_open = 1
 "「:wq」で終了する時も構文エラーチェックする
 let g:syntastic_check_on_wq = 1
-
 
 "----------------------------------------------------------
 " indentLine
@@ -262,7 +250,6 @@ augroup END
 inoremap {<Enter> {}<Left><CR><ESC><S-o>
 inoremap [<Enter> []<Left><CR><ESC><S-o>
 inoremap (<Enter> ()<Left><CR><ESC><S-o>
-
 
 "----------------------------------------------------------
 "emmet-vim
