@@ -25,6 +25,7 @@ if dein#load_state('~/.vim/dein')
   call dein#add('Shougo/neosnippet-snippets')
 
   " 導入プラグイン
+  " ウィンドウサイズ変更用
   call dein#add('simeji/winresizer')
   " molokaiシンタックス
   call dein#add('tomasr/molokai')
@@ -58,6 +59,8 @@ if dein#load_state('~/.vim/dein')
   call dein#add('vim-airline/vim-airline')
   call dein#add('vim-airline/vim-airline-themes')
   call dein#add('tpope/vim-fugitive')
+  " スムーズスクロール
+  call dein#add('yuttie/comfortable-motion.vim')
 
   " Required:
   call dein#end()
@@ -289,3 +292,9 @@ let g:syntastic_mode_map = {
 " winresizer
 "----------------------------------------------------------
 let g:winresizer_start_key = '<C-m>'
+
+"----------------------------------------------------------
+" スクロール
+"----------------------------------------------------------
+let  g:comfortable_motion_friction  =  300.0
+let  g:comfortable_motion_air_drag  =  0.2
