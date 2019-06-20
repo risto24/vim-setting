@@ -25,6 +25,13 @@ if dein#load_state('~/.vim/dein')
   call dein#add('Shougo/neosnippet-snippets')
 
   " 導入プラグイン
+  " TypeScriptシンタックス
+  call dein#add('leafgarland/typescript-vim')
+  " TypeScriptインデント
+  call dein#add('jason0x43/vim-js-indent')
+  " TypeScript補完
+  call dein#add('Shougo/vimproc', {'build': 'make'})
+  call dein#add('Quramy/tsuquyomi')
   " ウィンドウサイズ変更用
   call dein#add('simeji/winresizer')
   " molokaiシンタックス
@@ -298,3 +305,7 @@ let g:winresizer_start_key = '<C-m>'
 "----------------------------------------------------------
 let  g:comfortable_motion_friction  =  300.0
 let  g:comfortable_motion_air_drag  =  0.2
+
+"----------------------------------------------------------
+" TypeScript用シンタックス
+"----------------------------------------------------------
