@@ -25,15 +25,8 @@ if dein#load_state('~/.vim/dein')
   call dein#add('Shougo/neosnippet-snippets')
 
   " 導入プラグイン
-  " TypeScriptシンタックス
-  call dein#add('leafgarland/typescript-vim')
-  " TypeScriptインデント
-  call dein#add('jason0x43/vim-js-indent')
-  " TypeScript補完
-  call dein#add('Shougo/vimproc', {'build': 'make'})
-  call dein#add('Quramy/tsuquyomi')
   " ウィンドウサイズ変更用
-  call dein#add('simeji/winresizer')
+  "call dein#add('simeji/winresizer')
   " molokaiシンタックス
   call dein#add('tomasr/molokai')
   " ステータスラインの表示内容強化
@@ -56,18 +49,25 @@ if dein#load_state('~/.vim/dein')
   call dein#add('othree/html5.vim')
   " jsonファイル表示用
   call dein#add('elzr/vim-json')
-  " javascript予測変換
+  " javascriptシンタックス
   call dein#add('pangloss/vim-javascript')
   call dein#add('crusoexia/vim-javascript-lib')
+  " javascript予測変換
+  call dein#add('shougo/neocomplete.vim')
+  call dein#add('mattn/jscomplete-vim')
+  " javascriptインデント
+  call dein#add('jiangmiao/simple-javascript-indenter')
   " 括弧自動補完
   call dein#add('Townk/vim-autoclose')
   call dein#add('airblade/vim-gitgutter')
   " ステータスバー表示強化
   call dein#add('vim-airline/vim-airline')
   call dein#add('vim-airline/vim-airline-themes')
+  " あいまい検索
+  call dein#add('ctrlpvim/ctrlp.vim')
+  " Gitツール
   call dein#add('tpope/vim-fugitive')
-  " スムーズスクロール
-  call dein#add('yuttie/comfortable-motion.vim')
+
 
   " Required:
   call dein#end()
@@ -83,14 +83,6 @@ if dein#check_install()
   call dein#install()
 endif
 
-if has('lua')
-   "自動補間
-   call dein#add('Shougo/neocomplete.vim')
-    " スニペットの補完機能
-   call dein#add('Shougo/neosnippet')
-    " スニペット集
-   call dein#add('Shougo/neosnippet-snippets')
-endif
 
 "End dein Scripts-------------------------
 
@@ -209,7 +201,7 @@ source $VIMRUNTIME/macros/matchit.vim " Vimの「%」を拡張する
 set matchpairs& matchpairs+=<:> " 対応括弧に<と>のペアを追加
 
 "----------------------------------------------------------
-" neocomplete・neosnippetの設定
+" neocomplete・jscomplete-vimの設定
 "----------------------------------------------------------
 " Vim起動時にneocompleteを有効にする
 let g:neocomplete#enable_at_startup = 1
@@ -223,11 +215,8 @@ let g:neocomplete#enable_auto_delimiter = 1
 let g:neocomplete#auto_completion_start_length = 1
 " バックスペースで補完のポップアップを閉じる
 inoremap <expr><BS> neocomplete#smart_close_popup()."<C-h>"
-
-" エンターキーで補完候補の確定. スニペットの展開もエンターキーで確定
-imap <expr><CR> neosnippet#expandable() ? "<Plug>(neosnippet_expand_or_jump)" : pumvisible() ? "<C-y>" : "<CR>"
-" タブキーで補完候補の選択. スニペット内のジャンプもタブキーでジャンプ
-imap <expr><TAB> pumvisible() ? "<C-n>" : neosnippet#jumpable() ? "<Plug>(neosnippet_expand_or_jump)" : "<TAB>"
+" DOMとMozilla関連とES6のメソッドを補完
+let g:jscomplete_use = ['dom', 'moz', 'es6th']
 
 "----------------------------------------------------------
 " Syntastic
@@ -274,7 +263,7 @@ let g:vim_json_syntax_conceal = 0
 "----------------------------------------------------------
 " neadtree
 "----------------------------------------------------------
-map <C-e> :NERDTreeToggle<CR>
+map <silent> <C-q> :NERDTreeToggle<CR>
 let NERDTreeShowHidden = 1
 
 "----------------------------------------------------------
@@ -298,14 +287,9 @@ let g:syntastic_mode_map = {
 "----------------------------------------------------------
 " winresizer
 "----------------------------------------------------------
-let g:winresizer_start_key = '<C-m>'
+"let g:winresizer_start_key = '<C-m>'
 
 "----------------------------------------------------------
-" スクロール
+" あいまい検索
 "----------------------------------------------------------
-let  g:comfortable_motion_friction  =  300.0
-let  g:comfortable_motion_air_drag  =  0.2
-
-"----------------------------------------------------------
-" TypeScript用シンタックス
-"----------------------------------------------------------
+let g:ctrlp_map = '<Up>'
