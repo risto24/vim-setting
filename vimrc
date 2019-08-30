@@ -26,7 +26,7 @@ if dein#load_state('~/.vim/dein')
 
   " 導入プラグイン
   " ウィンドウサイズ変更用
-  "call dein#add('simeji/winresizer')
+  call dein#add('simeji/winresizer')
   " molokaiシンタックス
   call dein#add('tomasr/molokai')
   " ステータスラインの表示内容強化
@@ -49,9 +49,12 @@ if dein#load_state('~/.vim/dein')
   call dein#add('othree/html5.vim')
   " jsonファイル表示用
   call dein#add('elzr/vim-json')
-  " javascriptシンタックス
-  call dein#add('pangloss/vim-javascript')
-  call dein#add('crusoexia/vim-javascript-lib')
+  " pug シンタックスカラー
+  call dein#add('digitaltoad/vim-pug')
+  " javascriptシンタックスカラー
+  call dein#add('othree/yajs.vim')
+  " pug予測変換
+  call dein#add('dNitro/vim-pug-complete')
   " javascript予測変換
   call dein#add('shougo/neocomplete.vim')
   call dein#add('mattn/jscomplete-vim')
@@ -95,7 +98,8 @@ set noswapfile
 " エラーメッセージの表示時にビープを鳴らさない
 set noerrorbells
 set visualbell "ビープ音を視覚表示
-
+" 新しいウィンドウを右に開く
+set splitright
 
 "----------------------------------------------------------
 " カラースキーム
@@ -218,6 +222,7 @@ inoremap <expr><BS> neocomplete#smart_close_popup()."<C-h>"
 " DOMとMozilla関連とES6のメソッドを補完
 let g:jscomplete_use = ['dom', 'moz', 'es6th']
 
+
 "----------------------------------------------------------
 " Syntastic
 "----------------------------------------------------------
@@ -229,6 +234,12 @@ let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_check_on_open = 1
 "「:wq」で終了する時も構文エラーチェックする
 let g:syntastic_check_on_wq = 1
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_javascript_checkers = ['eslint']
 
 "----------------------------------------------------------
 " indentLine
@@ -263,7 +274,7 @@ let g:vim_json_syntax_conceal = 0
 "----------------------------------------------------------
 " neadtree
 "----------------------------------------------------------
-map <silent> <C-q> :NERDTreeToggle<CR>
+map <silent> <Down> :NERDTreeToggle<CR>
 let NERDTreeShowHidden = 1
 
 "----------------------------------------------------------
@@ -287,9 +298,14 @@ let g:syntastic_mode_map = {
 "----------------------------------------------------------
 " winresizer
 "----------------------------------------------------------
-"let g:winresizer_start_key = '<C-m>'
+let g:winresizer_start_key = '<C-s>'
 
 "----------------------------------------------------------
 " あいまい検索
 "----------------------------------------------------------
 let g:ctrlp_map = '<Up>'
+
+"----------------------------------------------------------
+" シンタックスカラー
+"----------------------------------------------------------
+autocmd BufRead,BufNewFile *.es6 setfiletype javascript
