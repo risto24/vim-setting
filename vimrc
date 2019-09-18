@@ -70,10 +70,14 @@ if dein#load_state('~/.vim/dein')
   " ステータスバー表示強化
   call dein#add('vim-airline/vim-airline')
   call dein#add('vim-airline/vim-airline-themes')
-  " あいまい検索
-  call dein#add('ctrlpvim/ctrlp.vim')
   " Gitツール
   call dein#add('tpope/vim-fugitive')
+  " fzf(あいまい検索)
+  call dein#add('junegunn/fzf', {'build': './install --all'})
+  " fzf.vim
+  call dein#add('junegunn/fzf.vim')
+  " ウェルカムページ
+  call dein#add('mhinz/vim-startify')
 
 
   " Required:
@@ -104,6 +108,21 @@ set noerrorbells
 set visualbell "ビープ音を視覚表示
 " 新しいウィンドウを右に開く
 set splitright
+
+"----------------------------------------------------------
+" WELCOMEページ
+"----------------------------------------------------------
+" startifyのヘッダー部分に表示する文字列を設定する(dateコマンドを実行して日付を設定している)
+let g:startify_custom_header =
+  \ map(split(system('date'), '\n'), '"   ". v:val') + ['','']
+" デフォルトだと、最近使ったファイルの先頭は数字なので、使用するアルファベットを指定
+let g:startify_custom_indices = ['f', 'g', 'h', 'r', 'i', 'o', 'b']
+" よく使うファイルをブックマークとして登録しておく
+let g:startify_bookmarks = [
+  \ '~/.vimrc',
+  \ '~/internous-pjt/4each-pjt/4each/',
+  \ '~/internous-pjt/sample/college-app/',
+  \ ]
 
 "----------------------------------------------------------
 " カラースキーム
@@ -225,11 +244,6 @@ inoremap <expr><BS> neocomplete#smart_close_popup()."<C-h>"
 " DOMとMozilla関連とES6のメソッドを補完
 let g:jscomplete_use = ['dom', 'moz', 'es6th']
 
-
-"----------------------------------------------------------
-" Syntastic
-"----------------------------------------------------------
-
 "----------------------------------------------------------
 " indentLine
 "----------------------------------------------------------
@@ -290,11 +304,21 @@ let g:syntastic_mode_map = {
 let g:winresizer_start_key = '<C-s>'
 
 "----------------------------------------------------------
-" あいまい検索
-"----------------------------------------------------------
-let g:ctrlp_map = '<Up>'
-
-"----------------------------------------------------------
 " シンタックスカラー
 "----------------------------------------------------------
 autocmd BufRead,BufNewFile *.es6 setfiletype javascript
+
+"----------------------------------------------------------
+" fzf
+"----------------------------------------------------------
+" ファイル一覧を出すときにプレビュー表示
+command! -bang -nargs=? -complete=dir Files
+\ call fzf#vim#files(<q-args>, fzf#vim#with_preview(), <bang>0)
+
+" ripgrepで検索中、?を押すとプレビュー:
+command! -bang -nargs=* Rg
+  \ call fzf#vim#grep(
+  \   'rg --column --line-number --no-heading --color=always --smart-case '.shellescape(<q-args>), 1,
+  \   <bang>0 ? fzf#vim#with_preview('up:60%')
+  \           : fzf#vim#with_preview('right:50%:hidden', '?'),
+  \   <bang>0)
