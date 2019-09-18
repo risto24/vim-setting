@@ -24,10 +24,12 @@ if dein#load_state('~/.vim/dein')
   call dein#add('Shougo/neosnippet.vim')
   call dein#add('Shougo/neosnippet-snippets')
 
-  " 導入プラグイン
+"----------------------------------------------------------
+" 導入プラグイン
+"----------------------------------------------------------
   " ウィンドウサイズ変更用
   call dein#add('simeji/winresizer')
-  " molokaiシンタックス
+  " molokaiテーマ
   call dein#add('tomasr/molokai')
   " ステータスラインの表示内容強化
   "call dein#add('itchyny/lightline.vim')
@@ -51,10 +53,12 @@ if dein#load_state('~/.vim/dein')
   call dein#add('elzr/vim-json')
   " pug シンタックスカラー
   call dein#add('digitaltoad/vim-pug')
-  " javascriptシンタックスカラー
-  call dein#add('othree/yajs.vim')
   " pug予測変換
   call dein#add('dNitro/vim-pug-complete')
+  " javascriptシンタックスカラー
+  call dein#add('othree/yajs.vim')
+  " eslint静的解析
+  call dein#add('w0rp/ale')
   " javascript予測変換
   call dein#add('shougo/neocomplete.vim')
   call dein#add('mattn/jscomplete-vim')
@@ -158,7 +162,6 @@ set ruler " ステータスラインの右側にカーソルの位置を表示�
 set wildmenu " コマンドモードの補完
 set history=5000 " 保存するコマンド履歴の数
 
-
 "----------------------------------------------------------
 " タブ・インデント
 "----------------------------------------------------------
@@ -226,20 +229,6 @@ let g:jscomplete_use = ['dom', 'moz', 'es6th']
 "----------------------------------------------------------
 " Syntastic
 "----------------------------------------------------------
-" 構文エラー行に「>>」を表示
-let g:syntastic_enable_signs = 1
-" 他のVimプラグインと競合するのを防ぐ
-let g:syntastic_always_populate_loc_list = 1
-" ファイルを開いた時に構文エラーチェックを実行する
-let g:syntastic_check_on_open = 1
-"「:wq」で終了する時も構文エラーチェックする
-let g:syntastic_check_on_wq = 1
-set statusline+=%#warningmsg#
-set statusline+=%{SyntasticStatuslineFlag()}
-set statusline+=%*
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 1
-let g:syntastic_javascript_checkers = ['eslint']
 
 "----------------------------------------------------------
 " indentLine
