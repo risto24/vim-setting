@@ -38,7 +38,7 @@ if dein#load_state('~/.vim/dein')
   " 末尾の全角半角空白文字を赤くハイライト
   call dein#add('bronson/vim-trailing-whitespace')
   " 構文エラーチェック
-  call dein#add('scrooloose/syntastic')
+  "call dein#add('scrooloose/syntastic')
   " 多機能セレクタ
   call dein#add('ctrlpvim/ctrlp.vim')
   " ファイルツリー
@@ -222,7 +222,7 @@ set mouse=a
 "----------------------------------------------------------
 " カッコ・タグの対応
 "----------------------------------------------------------
-set showmatch " 括弧の対応関係を一瞬表示する
+set showmatch " 括弧の対応関係を表示する
 source $VIMRUNTIME/macros/matchit.vim " Vimの「%」を拡張する
 set matchpairs& matchpairs+=<:> " 対応括弧に<と>のペアを追加
 
@@ -283,20 +283,20 @@ let NERDTreeShowHidden = 1
 "----------------------------------------------------------
 " シンタックス
 "----------------------------------------------------------
-let g:syntastic_check_on_open=0 "ファイルを開いたときはチェックしない
-let g:syntastic_check_on_save=1 "保存時にはチェック
-let g:syntastic_check_on_wq = 1 " wqでもチェック
-let g:syntastic_auto_loc_list=1 "エラーがあったら自動でロケーションリストを開く
-let g:syntastic_loc_list_height=6 "エラー表示ウィンドウの高さ
-set statusline+=%#warningmsg# "エラーメッセージの書式
-set statusline+=%{SyntasticStatuslineFlag()}
-set statusline+=%*
-let g:syntastic_javascript_checkers = ['eslint'] "ESLintを使う
-let g:syntastic_mode_map = {
-      \ 'mode': 'active',
-      \ 'active_filetypes': ['javascript'],
-      \ 'passive_filetypes': []
-      \ }
+"let g:syntastic_check_on_open=0 "ファイルを開いたときはチェックしない
+"let g:syntastic_check_on_save=1 "保存時にはチェック
+"let g:syntastic_check_on_wq = 1 " wqでもチェック
+"let g:syntastic_auto_loc_list=1 "エラーがあったら自動でロケーションリストを開く
+"let g:syntastic_loc_list_height=6 "エラー表示ウィンドウの高さ
+"set statusline+=%#warningmsg# "エラーメッセージの書式
+"set statusline+=%{SyntasticStatuslineFlag()}
+"set statusline+=%*
+"let g:syntastic_javascript_checkers = ['eslint'] "ESLintを使う
+"let g:syntastic_mode_map = {
+"      \ 'mode': 'active',
+"      \ 'active_filetypes': ['javascript'],
+"      \ 'passive_filetypes': []
+"      \ }
 
 "----------------------------------------------------------
 " winresizer
@@ -306,7 +306,7 @@ let g:winresizer_start_key = '<C-s>'
 "----------------------------------------------------------
 " シンタックスカラー
 "----------------------------------------------------------
-autocmd BufRead,BufNewFile *.es6 setfiletype javascript
+"autocmd BufRead,BufNewFile *.es6 setfiletype javascript
 
 "----------------------------------------------------------
 " fzf
