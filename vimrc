@@ -110,6 +110,13 @@ set visualbell "ビープ音を視覚表示
 set splitright
 
 "----------------------------------------------------------
+" キーマップ
+"----------------------------------------------------------
+map <silent> <UP> :Files<CR>
+map <C-j> gT
+map <C-k> gt
+
+"----------------------------------------------------------
 " WELCOMEページ
 "----------------------------------------------------------
 " startifyのヘッダー部分に表示する文字列を設定する(dateコマンドを実行して日付を設定している)
@@ -127,6 +134,8 @@ let g:startify_bookmarks = [
 "----------------------------------------------------------
 " カラースキーム
 "----------------------------------------------------------
+"背景色をターミナルに合わせる
+autocmd ColorScheme * highlight molokai ctermbg=none
 colorscheme molokai
 
 set t_Co=256 " iTerm2など既に256色環境なら無くても良い
@@ -149,24 +158,27 @@ if has('vim_starting')
 endif
 
 "----------------------------------------------------------
-" キーバインド
-"----------------------------------------------------------
-"imap <C-d> <Del>
-
-"----------------------------------------------------------
 " ステータスライン
 "----------------------------------------------------------
 "set ambiwidth=double
-let g:airline_left_sep = '⮀'
-let g:airline_left_alt_sep = '⮁'
-let g:airline_right_sep = '⮂'
-let g:airline_right_alt_sep = '⮃'
+"let g:airline_left_sep = '⮀'
+"let g:airline_left_alt_sep = '⮁'
+"let g:airline_right_sep = '⮂'
+"let g:airline_right_alt_sep = '⮃'
 let g:airline_theme = 'dark'  "テーマ
-let g:airline_powerline_fonts = 1
-let g:airline#extensions#tabline#enabled = 1  "上表示
-let g:airline#extensions#tabline#buffer_idx_mode = 1
-let g:airline#extensions#virtualenv#enabled = 1
+"let g:airline_powerline_fonts = 1
+""let g:airline#extensions#tabline#buffer_idx_mode = 1
+"let g:airline#extensions#virtualenv#enabled = 1
 let g:airline_symbols = { 'dirty': '' }
+let g:airline#extensions#ale#enabled = 0 "ALEを非表示に
+
+"----------------------------------------------------------
+" タブページ
+"----------------------------------------------------------
+set showtabline=2 "常にタブを表示させておく
+"let g:airline#extensions#tabline#show_tabs = 0 " タブを右側に表示させない
+"let g:airline#extensions#tabline#show_tab_count = 0 " タブを右側に表示させない
+"let g:airline#extensions#tabline#enabled = 1  "上表示
 
 "----------------------------------------------------------
 " 文字
