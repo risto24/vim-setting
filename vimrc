@@ -29,6 +29,8 @@ if dein#load_state('~/.vim/dein')
 "----------------------------------------------------------
   " ウィンドウサイズ変更用
   call dein#add('simeji/winresizer')
+  " メモ機能
+  call dein#add('glidenote/memolist.vim')
   " molokaiテーマ
   call dein#add('tomasr/molokai')
   " ステータスラインの表示内容強化
@@ -65,13 +67,13 @@ if dein#load_state('~/.vim/dein')
   " javascriptインデント
   call dein#add('jiangmiao/simple-javascript-indenter')
   " 括弧自動補完
-  call dein#add('Townk/vim-autoclose')
-  call dein#add('airblade/vim-gitgutter')
+  " call dein#add('Townk/vim-autoclose')
   " ステータスバー表示強化
   call dein#add('vim-airline/vim-airline')
   call dein#add('vim-airline/vim-airline-themes')
   " Gitツール
   call dein#add('tpope/vim-fugitive')
+  call dein#add('airblade/vim-gitgutter')
   " fzf(あいまい検索)
   call dein#add('junegunn/fzf', {'build': './install --all'})
   " fzf.vim
@@ -127,6 +129,7 @@ let g:startify_custom_indices = ['f', 'g', 'h', 'r', 'i', 'o', 'b']
 " よく使うファイルをブックマークとして登録しておく
 let g:startify_bookmarks = [
   \ '~/.vimrc',
+  \ '~/memo',
   \ '~/internous-pjt/4each-pjt/4each/',
   \ '~/internous-pjt/sample/college-app/',
   \ ]
@@ -148,14 +151,14 @@ let g:javascript_plugin_flow = 1
 "----------------------------------------------------------
 " カーソル形状変更
 "----------------------------------------------------------
-if has('vim_starting')
-    " 挿入モード時に非点滅の縦棒タイプのカーソル
-    let &t_SI .= "\e[6 q"
-    " ノーマルモード時に非点滅のブロックタイプのカーソル
-    let &t_EI .= "\e[2 q"
-    " 置換モード時に非点滅の下線タイプのカーソル
-    let &t_SR .= "\e[4 q"
-endif
+"if has('vim_starting')
+"    " 挿入モード時に非点滅の縦棒タイプのカーソル
+"    let &t_SI .= "\e[6 q"
+"    " ノーマルモード時に非点滅のブロックタイプのカーソル
+"    let &t_EI .= "\e[2 q"
+"    " 置換モード時に非点滅の下線タイプのカーソル
+"    let &t_SR .= "\e[4 q"
+"endif
 
 "----------------------------------------------------------
 " ステータスライン
@@ -246,6 +249,7 @@ set mouse=a
 " カッコ・タグの対応
 "----------------------------------------------------------
 set showmatch " 括弧の対応関係を表示する
+set matchtime=1
 source $VIMRUNTIME/macros/matchit.vim " Vimの「%」を拡張する
 set matchpairs& matchpairs+=<:> " 対応括弧に<と>のペアを追加
 
@@ -345,3 +349,8 @@ command! -bang -nargs=* Rg
   \   <bang>0 ? fzf#vim#with_preview('up:60%')
   \           : fzf#vim#with_preview('right:50%:hidden', '?'),
   \   <bang>0)
+"----------------------------------------------------------
+" memolist
+"----------------------------------------------------------
+let g:memolist_path = "~/memo"
+let g:memolist_memo_suffix = "txt"
