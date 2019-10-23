@@ -34,7 +34,7 @@ if dein#load_state('~/.vim/dein')
   " molokaiテーマ
   call dein#add('tomasr/molokai')
   " ステータスラインの表示内容強化
-  "call dein#add('itchyny/lightline.vim')
+  call dein#add('itchyny/lightline.vim')
   " インデントの可視化
   call dein#add('Yggdroot/indentLine')
   " 末尾の全角半角空白文字を赤くハイライト
@@ -69,8 +69,8 @@ if dein#load_state('~/.vim/dein')
   " 括弧自動補完
   " call dein#add('Townk/vim-autoclose')
   " ステータスバー表示強化
-  call dein#add('vim-airline/vim-airline')
-  call dein#add('vim-airline/vim-airline-themes')
+  "call dein#add('vim-airline/vim-airline')
+  "call dein#add('vim-airline/vim-airline-themes')
   " Gitツール
   call dein#add('tpope/vim-fugitive')
   call dein#add('airblade/vim-gitgutter')
@@ -129,9 +129,11 @@ let g:startify_custom_indices = ['f', 'g', 'h', 'r', 'i', 'o', 'b']
 " よく使うファイルをブックマークとして登録しておく
 let g:startify_bookmarks = [
   \ '~/.vimrc',
+  \ '~/.zshrc',
+  \ '~/.zprofile',
   \ '~/memo',
   \ '~/internous-pjt/4each-pjt/4each/',
-  \ '~/internous-pjt/sample/college-app/',
+  \ '~/internous-pjt/college-app/',
   \ ]
 
 "----------------------------------------------------------
@@ -160,28 +162,15 @@ let g:javascript_plugin_flow = 1
 "    let &t_SR .= "\e[4 q"
 "endif
 
-"----------------------------------------------------------
-" ステータスライン
-"----------------------------------------------------------
-"set ambiwidth=double
-"let g:airline_left_sep = '⮀'
-"let g:airline_left_alt_sep = '⮁'
-"let g:airline_right_sep = '⮂'
-"let g:airline_right_alt_sep = '⮃'
-let g:airline_theme = 'dark'  "テーマ
-"let g:airline_powerline_fonts = 1
-""let g:airline#extensions#tabline#buffer_idx_mode = 1
-"let g:airline#extensions#virtualenv#enabled = 1
-let g:airline_symbols = { 'dirty': '' }
-let g:airline#extensions#ale#enabled = 0 "ALEを非表示に
 
 "----------------------------------------------------------
 " タブページ
 "----------------------------------------------------------
 set showtabline=2 "常にタブを表示させておく
-"let g:airline#extensions#tabline#show_tabs = 0 " タブを右側に表示させない
-"let g:airline#extensions#tabline#show_tab_count = 0 " タブを右側に表示させない
-"let g:airline#extensions#tabline#enabled = 1  "上表示
+let s:palette = g:lightline#colorscheme#powerline#palette
+let s:palette.tabline.tabsel = [ [ '#1c1e1e', '#afdf02', 252, 66, 'bold' ] ]
+let s:palette.tabline.middle = [ [ '#f8f8f8', '#1c1e1e', 252, 66, 'bold' ] ]
+unlet s:palette
 
 "----------------------------------------------------------
 " 文字
@@ -228,9 +217,6 @@ set incsearch " インクリメンタルサーチ. １文字入力毎に検索�
 set ignorecase " 検索パターンに大文字小文字を区別しない
 set smartcase " 検索パターンに大文字を含んでいたら大文字小文字を区別する
 set hlsearch " 検索結果をハイライト
-
-" ESCキー2度押しでハイライトの切り替え
-nnoremap <silent><Esc><Esc> :<C-u>set nohlsearch!<CR>
 
 "----------------------------------------------------------
 " カーソル
@@ -307,33 +293,11 @@ let g:vim_json_syntax_conceal = 0
 map <silent> <Down> :NERDTreeToggle<CR>
 let NERDTreeShowHidden = 1
 
-"----------------------------------------------------------
-" シンタックス
-"----------------------------------------------------------
-"let g:syntastic_check_on_open=0 "ファイルを開いたときはチェックしない
-"let g:syntastic_check_on_save=1 "保存時にはチェック
-"let g:syntastic_check_on_wq = 1 " wqでもチェック
-"let g:syntastic_auto_loc_list=1 "エラーがあったら自動でロケーションリストを開く
-"let g:syntastic_loc_list_height=6 "エラー表示ウィンドウの高さ
-"set statusline+=%#warningmsg# "エラーメッセージの書式
-"set statusline+=%{SyntasticStatuslineFlag()}
-"set statusline+=%*
-"let g:syntastic_javascript_checkers = ['eslint'] "ESLintを使う
-"let g:syntastic_mode_map = {
-"      \ 'mode': 'active',
-"      \ 'active_filetypes': ['javascript'],
-"      \ 'passive_filetypes': []
-"      \ }
 
 "----------------------------------------------------------
 " winresizer
 "----------------------------------------------------------
 let g:winresizer_start_key = '<C-s>'
-
-"----------------------------------------------------------
-" シンタックスカラー
-"----------------------------------------------------------
-"autocmd BufRead,BufNewFile *.es6 setfiletype javascript
 
 "----------------------------------------------------------
 " fzf
