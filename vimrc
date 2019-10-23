@@ -168,8 +168,8 @@ let g:javascript_plugin_flow = 1
 "----------------------------------------------------------
 set showtabline=2 "常にタブを表示させておく
 let s:palette = g:lightline#colorscheme#powerline#palette
-let s:palette.tabline.tabsel = [ [ '#1c1e1e', '#afdf02', 252, 66, 'bold' ] ]
-let s:palette.tabline.middle = [ [ '#f8f8f8', '#1c1e1e', 252, 66, 'bold' ] ]
+let s:palette.tabline.tabsel = [ [ '#1c1e1e', '#afdf02', 016, 118, 'bold' ] ]
+let s:palette.tabline.middle = [ [ '#f8f8f8', '#1c1e1e', 015, 016, 'bold' ] ]
 unlet s:palette
 
 "----------------------------------------------------------
