@@ -39,8 +39,6 @@ if dein#load_state('~/.vim/dein')
   call dein#add('Yggdroot/indentLine')
   " 末尾の全角半角空白文字を赤くハイライト
   call dein#add('bronson/vim-trailing-whitespace')
-  " 構文エラーチェック
-  "call dein#add('scrooloose/syntastic')
   " 多機能セレクタ
   call dein#add('ctrlpvim/ctrlp.vim')
   " ファイルツリー
@@ -66,11 +64,6 @@ if dein#load_state('~/.vim/dein')
   call dein#add('mattn/jscomplete-vim')
   " javascriptインデント
   call dein#add('jiangmiao/simple-javascript-indenter')
-  " 括弧自動補完
-  " call dein#add('Townk/vim-autoclose')
-  " ステータスバー表示強化
-  "call dein#add('vim-airline/vim-airline')
-  "call dein#add('vim-airline/vim-airline-themes')
   " Gitツール
   call dein#add('tpope/vim-fugitive')
   call dein#add('airblade/vim-gitgutter')
@@ -80,7 +73,6 @@ if dein#load_state('~/.vim/dein')
   call dein#add('junegunn/fzf.vim')
   " ウェルカムページ
   call dein#add('mhinz/vim-startify')
-
 
   " Required:
   call dein#end()
@@ -98,7 +90,6 @@ endif
 
 
 "End dein Scripts-------------------------
-
 " クリップボード連携
 set clipboard=unnamed,autoselect
 " バックアップファイルを作らない
@@ -112,12 +103,28 @@ set visualbell "ビープ音を視覚表示
 set splitright
 
 "----------------------------------------------------------
+" 日時表示
+"----------------------------------------------------------
+let weeks = [ "Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat" ]
+let wday = strftime("%w")
+command! Time echo strftime('%Y-%m-%d ').weeks[wday].strftime(' %H:%M')
+"----------------------------------------------------------
 " キーマップ
 "----------------------------------------------------------
 map <silent> <UP> :Files<CR>
 map <C-j> gT
 map <C-k> gt
 
+"----------------------------------------------------------
+" ターミナル設定
+"----------------------------------------------------------
+" <Esc> で :terminal の insert を抜ける
+" tnoremap <Esc> <C-w><S-n>
+" タブ移動キー設定
+tnoremap <C-j> <C-w>g<S-t>
+tnoremap <C-k> <C-w>gt
+" タブでターミナルを開く
+command! Ttm :tab terminal
 "----------------------------------------------------------
 " WELCOMEページ
 "----------------------------------------------------------
@@ -229,12 +236,12 @@ set backspace=indent,eol,start
 let &t_EI .= "\e[1 q" "カーソル形状変更
 
 "マウス操作の許可
-set mouse=a
+"set mouse=a
 
 "----------------------------------------------------------
 " カッコ・タグの対応
 "----------------------------------------------------------
-set showmatch " 括弧の対応関係を表示する
+" set showmatch " 括弧の対応関係を表示する
 set matchtime=1
 source $VIMRUNTIME/macros/matchit.vim " Vimの「%」を拡張する
 set matchpairs& matchpairs+=<:> " 対応括弧に<と>のペアを追加
@@ -297,7 +304,7 @@ let NERDTreeShowHidden = 1
 "----------------------------------------------------------
 " winresizer
 "----------------------------------------------------------
-let g:winresizer_start_key = '<C-s>'
+command! Wr :WinResizerStartResize
 
 "----------------------------------------------------------
 " fzf
@@ -313,6 +320,7 @@ command! -bang -nargs=* Rg
   \   <bang>0 ? fzf#vim#with_preview('up:60%')
   \           : fzf#vim#with_preview('right:50%:hidden', '?'),
   \   <bang>0)
+
 "----------------------------------------------------------
 " memolist
 "----------------------------------------------------------
