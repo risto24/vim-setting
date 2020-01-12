@@ -43,6 +43,7 @@ if dein#load_state('~/.vim/dein')
   call dein#add('ctrlpvim/ctrlp.vim')
   " ファイルツリー
   call dein#add('scrooloose/nerdtree')
+  call dein#add('jistr/vim-nerdtree-tabs')
   " emmet
   call dein#add('mattn/emmet-vim')
   " cssシンタックスカラー
@@ -59,9 +60,6 @@ if dein#load_state('~/.vim/dein')
   call dein#add('othree/yajs.vim')
   " eslint静的解析
   call dein#add('w0rp/ale')
-  " javascript予測変換
-  call dein#add('shougo/neocomplete.vim')
-  call dein#add('mattn/jscomplete-vim')
   " javascriptインデント
   call dein#add('jiangmiao/simple-javascript-indenter')
   " Gitツール
@@ -73,6 +71,11 @@ if dein#load_state('~/.vim/dein')
   call dein#add('junegunn/fzf.vim')
   " ウェルカムページ
   call dein#add('mhinz/vim-startify')
+  " lsp
+  call dein#add('prabirshrestha/async.vim')
+  call dein#add('prabirshrestha/vim-lsp')
+  call dein#add('prabirshrestha/asyncomplete.vim')
+  call dein#add('prabirshrestha/asyncomplete-lsp.vim')
 
   " Required:
   call dein#end()
@@ -92,6 +95,8 @@ endif
 "End dein Scripts-------------------------
 " クリップボード連携
 set clipboard=unnamed,autoselect
+set clipboard&
+set clipboard^=unnamedplus
 " バックアップファイルを作らない
 set nobackup
 " スワップファイルを作らない
@@ -101,7 +106,6 @@ set noerrorbells
 set visualbell "ビープ音を視覚表示
 " 新しいウィンドウを右に開く
 set splitright
-
 "----------------------------------------------------------
 " 日時表示
 "----------------------------------------------------------
@@ -111,7 +115,7 @@ command! Time echo strftime('%Y-%m-%d ').weeks[wday].strftime(' %H:%M')
 "----------------------------------------------------------
 " キーマップ
 "----------------------------------------------------------
-map <silent> <UP> :Files<CR>
+"map <silent> <UP> :Files<CR>
 map <C-j> gT
 map <C-k> gt
 
@@ -119,12 +123,13 @@ map <C-k> gt
 " ターミナル設定
 "----------------------------------------------------------
 " <Esc> で :terminal の insert を抜ける
-" tnoremap <Esc> <C-w><S-n>
+tnoremap <Esc> <C-w><S-n>
 " タブ移動キー設定
 tnoremap <C-j> <C-w>g<S-t>
 tnoremap <C-k> <C-w>gt
 " タブでターミナルを開く
 command! Ttm :tab terminal
+
 "----------------------------------------------------------
 " WELCOMEページ
 "----------------------------------------------------------
@@ -146,8 +151,9 @@ let g:startify_bookmarks = [
 "----------------------------------------------------------
 " カラースキーム
 "----------------------------------------------------------
-"背景色をターミナルに合わせる
-autocmd ColorScheme * highlight molokai ctermbg=none
+autocmd ColorScheme * highlight Normal ctermbg=none
+autocmd ColorScheme * highlight LineNr ctermbg=none
+
 colorscheme molokai
 
 set t_Co=256 " iTerm2など既に256色環境なら無くても良い
@@ -157,9 +163,21 @@ let g:javascript_plugin_jsdoc = 1
 let g:javascript_plugin_ngdoc = 1
 let g:javascript_plugin_flow = 1
 
+
 "----------------------------------------------------------
+" カーソル
+"----------------------------------------------------------
+set number " 行番号を表示
+"set cursorline " カーソルラインをハイライト
+
+" バックスペースキーの有効化
+set backspace=indent,eol,start
+let &t_EI .= "\e[1 q" "カーソル形状変更
+
+"マウス操作の許可
+"set mouse=a
+
 " カーソル形状変更
-"----------------------------------------------------------
 "if has('vim_starting')
 "    " 挿入モード時に非点滅の縦棒タイプのカーソル
 "    let &t_SI .= "\e[6 q"
@@ -169,11 +187,10 @@ let g:javascript_plugin_flow = 1
 "    let &t_SR .= "\e[4 q"
 "endif
 
-
 "----------------------------------------------------------
 " タブページ
 "----------------------------------------------------------
-set showtabline=2 "常にタブを表示させておく
+"set showtabline=2 "常にタブを表示させておく
 let s:palette = g:lightline#colorscheme#powerline#palette
 let s:palette.tabline.tabsel = [ [ '#1c1e1e', '#afdf02', 016, 118, 'bold' ] ]
 let s:palette.tabline.middle = [ [ '#f8f8f8', '#1c1e1e', 015, 016, 'bold' ] ]
@@ -226,43 +243,14 @@ set smartcase " 検索パターンに大文字を含んでいたら大文字小�
 set hlsearch " 検索結果をハイライト
 
 "----------------------------------------------------------
-" カーソル
-"----------------------------------------------------------
-set number " 行番号を表示
-"set cursorline " カーソルラインをハイライト
-
-" バックスペースキーの有効化
-set backspace=indent,eol,start
-let &t_EI .= "\e[1 q" "カーソル形状変更
-
-"マウス操作の許可
-"set mouse=a
-
-"----------------------------------------------------------
 " カッコ・タグの対応
 "----------------------------------------------------------
-" set showmatch " 括弧の対応関係を表示する
-set matchtime=1
-source $VIMRUNTIME/macros/matchit.vim " Vimの「%」を拡張する
-set matchpairs& matchpairs+=<:> " 対応括弧に<と>のペアを追加
-
-"----------------------------------------------------------
-" neocomplete・jscomplete-vimの設定
-"----------------------------------------------------------
-" Vim起動時にneocompleteを有効にする
-let g:neocomplete#enable_at_startup = 1
-" smartcase有効化. 大文字が入力されるまで大文字小文字の区別を無視する
-let g:neocomplete#enable_smart_case = 1
-" 3文字以上の単語に対して補完を有効にする
-let g:neocomplete#min_keyword_length = 3
-" 区切り文字まで補完する
-let g:neocomplete#enable_auto_delimiter = 1
-" 1文字目の入力から補完のポップアップを表示
-let g:neocomplete#auto_completion_start_length = 1
-" バックスペースで補完のポップアップを閉じる
-inoremap <expr><BS> neocomplete#smart_close_popup()."<C-h>"
-" DOMとMozilla関連とES6のメソッドを補完
-let g:jscomplete_use = ['dom', 'moz', 'es6th']
+"対応括弧の表示を無効にする
+let loaded_matchparen = 1
+"set showmatch " 括弧の対応関係を表示する
+"set matchtime=1
+"source $VIMRUNTIME/macros/matchit.vim " Vimの「%」を拡張する
+"set matchpairs& matchpairs+=<:> " 対応括弧に<と>のペアを追加
 
 "----------------------------------------------------------
 " indentLine
@@ -297,14 +285,15 @@ let g:vim_json_syntax_conceal = 0
 "----------------------------------------------------------
 " neadtree
 "----------------------------------------------------------
-map <silent> <Down> :NERDTreeToggle<CR>
+map <C-n> <plug>NERDTreeTabsToggle<CR>
 let NERDTreeShowHidden = 1
-
+let g:NERDTreeStatusline = '%#NonText#'
 
 "----------------------------------------------------------
 " winresizer
 "----------------------------------------------------------
 command! Wr :WinResizerStartResize
+let g:winresizer_start_key = 'C-s'
 
 "----------------------------------------------------------
 " fzf
@@ -326,3 +315,94 @@ command! -bang -nargs=* Rg
 "----------------------------------------------------------
 let g:memolist_path = "~/memo"
 let g:memolist_memo_suffix = "txt"
+
+
+"----------------------------------------------------------
+" lightline
+"----------------------------------------------------------
+let g:lightline = {
+        \ 'mode_map': {'c': 'NORMAL'},
+        \ 'active': {
+        \   'left': [ [ 'mode', 'paste' ], [ 'fugitive'], [ 'filepath' ]]
+        \ },
+        \ 'component_function': {
+        \   'modified': 'LightlineModified',
+        \   'readonly': 'LightlineReadonly',
+        \   'fugitive': 'LightlineFugitive',
+        \   'filepath': 'LightlineFilePath',
+        \   'fileformat': 'LightlineFileformat',
+        \   'filetype': 'LightlineFiletype',
+        \   'fileencoding': 'LightlineFileencoding',
+        \   'mode': 'LightlineMode'
+        \ }
+        \ }
+
+function! LightlineModified()
+  return &ft =~ 'help\|vimfiler\|gundo' ? '' : &modified ? '+' : &modifiable ? '' : '-'
+endfunction
+
+function! LightlineReadonly()
+  return &ft !~? 'help\|vimfiler\|gundo' && &readonly ? 'x' : ''
+endfunction
+
+function! LightlineFilename()
+  return ('' != LightlineReadonly() ? LightlineReadonly() . ' ' : '') .
+        \ (&ft == 'vimfiler' ? vimfiler#get_status_string() :
+        \  &ft == 'unite' ? unite#get_status_string() :
+        \  &ft == 'vimshell' ? vimshell#get_status_string() :
+        \ '' != expand('%:t') ? expand('%:t') : '[No Name]') .
+        \ ('' != LightlineModified() ? ' ' . LightlineModified() : '')
+endfunction
+
+function! LightlineFilePath()
+  if winwidth(0) > 90
+    return expand("%:s")
+  else
+    return expand("%:t")
+  endif
+endfunction
+
+function! LightlineFugitive()
+  if &ft !~? 'vimfiler\|gundo' && exists('*fugitive#head')
+    return fugitive#head()
+  else
+    return ''
+  endif
+endfunction
+
+function! LightlineFileformat()
+  return winwidth(0) > 70 ? &fileformat : ''
+endfunction
+
+function! LightlineFiletype()
+  return winwidth(0) > 70 ? (&filetype !=# '' ? &filetype : 'no ft') : ''
+endfunction
+
+function! LightlineFileencoding()
+  return winwidth(0) > 70 ? (&fenc !=# '' ? &fenc : &enc) : ''
+endfunction
+
+function! LightlineMode()
+  return winwidth(0) > 60 ? lightline#mode() : ''
+endfunction
+
+
+"----------------------------------------------------------
+" vim-lsp
+"----------------------------------------------------------
+let g:lsp_diagnostics_enabled = 0
+
+if executable('typescript-language-server')
+    au User lsp_setup call lsp#register_server({
+        \ 'name': 'typescript-language-server',
+        \ 'cmd': {server_info->[&shell, &shellcmdflag, 'typescript-language-server --stdio']},
+        \ 'root_uri':{server_info->lsp#utils#path_to_uri(lsp#utils#find_nearest_parent_file_directory(lsp#utils#get_buffer_path(), 'tsconfig.json'))},
+        \ 'whitelist': ['typescript', 'typescript.tsx'],
+        \ })
+    au User lsp_setup call lsp#register_server({
+    \ 'name': 'javascript support using typescript-language-server',
+    \ 'cmd': {server_info->[&shell, &shellcmdflag, 'typescript-language-server --stdio']},
+    \ 'root_uri':{server_info->lsp#utils#path_to_uri(lsp#utils#find_nearest_parent_file_directory(lsp#utils#get_buffer_path(), 'package.json'))},
+    \ 'whitelist': ['javascript', 'javascript.jsx', 'javascriptreact'],
+    \ })
+endif
