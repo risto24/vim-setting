@@ -5,24 +5,25 @@ scriptencoding utf-8
 " Vim scritptにvimrcも含まれるので、日本語でコメントを書く場合は先頭にこの設定が必要になる
 
 "dein Scripts-----------------------------
+"
 if &compatible
   set nocompatible               " Be iMproved
 endif
 
 " Required:
-set runtimepath+=~/.vim/dein/repos/github.com/Shougo/dein.vim
+set runtimepath+=/home/risto/.cache/dein/repos/github.com/Shougo/dein.vim
 
 " Required:
-if dein#load_state('~/.vim/dein')
-  call dein#begin('~/.vim/dein')
+if dein#load_state('/home/risto/.cache/dein')
+  call dein#begin('/home/risto/.cache/dein')
 
   " Let dein manage dein
   " Required:
-  call dein#add('~/.vim/dein/repos/github.com/Shougo/dein.vim')
+  call dein#add('/home/risto/.cache/dein/repos/github.com/Shougo/dein.vim')
 
   " Add or remove your plugins here like this:
-  call dein#add('Shougo/neosnippet.vim')
-  call dein#add('Shougo/neosnippet-snippets')
+  "call dein#add('Shougo/neosnippet.vim')
+  "call dein#add('Shougo/neosnippet-snippets')
 
 "----------------------------------------------------------
 " 導入プラグイン
@@ -46,22 +47,14 @@ if dein#load_state('~/.vim/dein')
   call dein#add('jistr/vim-nerdtree-tabs')
   " emmet
   call dein#add('mattn/emmet-vim')
-  " cssシンタックスカラー
-  call dein#add('hail2u/vim-css3-syntax')
-  " htmlシンタックスカラー
-  call dein#add('othree/html5.vim')
-  " jsonファイル表示用
-  call dein#add('elzr/vim-json')
   " pug シンタックスカラー
   call dein#add('digitaltoad/vim-pug')
   " pug予測変換
   call dein#add('dNitro/vim-pug-complete')
-  " javascriptシンタックスカラー
-  call dein#add('othree/yajs.vim')
+  " jsonファイル表示用
+  call dein#add('elzr/vim-json')
   " eslint静的解析
   call dein#add('w0rp/ale')
-  " javascriptインデント
-  call dein#add('jiangmiao/simple-javascript-indenter')
   " Gitツール
   call dein#add('tpope/vim-fugitive')
   call dein#add('airblade/vim-gitgutter')
@@ -106,6 +99,7 @@ set noerrorbells
 set visualbell "ビープ音を視覚表示
 " 新しいウィンドウを右に開く
 set splitright
+
 "----------------------------------------------------------
 " 日時表示
 "----------------------------------------------------------
@@ -157,11 +151,11 @@ autocmd ColorScheme * highlight LineNr ctermbg=none
 colorscheme molokai
 
 set t_Co=256 " iTerm2など既に256色環境なら無くても良い
-syntax enable " 構文に色を付ける
 set termguicolors
-let g:javascript_plugin_jsdoc = 1
-let g:javascript_plugin_ngdoc = 1
-let g:javascript_plugin_flow = 1
+
+"let g:javascript_plugin_jsdoc = 1
+"let g:javascript_plugin_ngdoc = 1
+"let g:javascript_plugin_flow = 1
 
 
 "----------------------------------------------------------
@@ -298,10 +292,6 @@ let g:winresizer_start_key = 'C-s'
 "----------------------------------------------------------
 " fzf
 "----------------------------------------------------------
-" ファイル一覧を出すときにプレビュー表示
-command! -bang -nargs=? -complete=dir Files
-\ call fzf#vim#files(<q-args>, fzf#vim#with_preview(), <bang>0)
-
 " ripgrepで検索中、?を押すとプレビュー:
 command! -bang -nargs=* Rg
   \ call fzf#vim#grep(
@@ -310,6 +300,9 @@ command! -bang -nargs=* Rg
   \           : fzf#vim#with_preview('right:50%:hidden', '?'),
   \   <bang>0)
 
+" Filesコマンドにもプレビューを出す
+command! -bang -nargs=? -complete=dir Files
+  \ call fzf#vim#files(<q-args>, fzf#vim#with_preview(), <bang>0)
 "----------------------------------------------------------
 " memolist
 "----------------------------------------------------------
@@ -392,6 +385,7 @@ endfunction
 "----------------------------------------------------------
 let g:lsp_diagnostics_enabled = 0
 
+" JavaScript
 if executable('typescript-language-server')
     au User lsp_setup call lsp#register_server({
         \ 'name': 'typescript-language-server',
@@ -405,4 +399,50 @@ if executable('typescript-language-server')
     \ 'root_uri':{server_info->lsp#utils#path_to_uri(lsp#utils#find_nearest_parent_file_directory(lsp#utils#get_buffer_path(), 'package.json'))},
     \ 'whitelist': ['javascript', 'javascript.jsx', 'javascriptreact'],
     \ })
+endif
+
+" CSS
+if executable('css-languageserver')
+    au User lsp_setup call lsp#register_server({
+        \ 'name': 'css-languageserver',
+        \ 'cmd': {server_info->[&shell, &shellcmdflag, 'css-languageserver --stdio']},
+        \ 'whitelist': ['css', 'less', 'sass'],
+        \ })
+endif
+
+"HTML
+if executable('html-languageserver')
+  au User lsp_setup call lsp#register_server({
+    \ 'name': 'html-languageserver',
+    \ 'cmd': {server_info->[&shell, &shellcmdflag, 'html-languageserver --stdio']},
+    \ 'whitelist': ['html'],
+  \ })
+endif
+
+"Go
+if executable('gopls')
+    au User lsp_setup call lsp#register_server({
+        \ 'name': 'gopls',
+        \ 'cmd': {server_info->['gopls']},
+        \ 'whitelist': ['go'],
+        \ })
+    autocmd BufWritePre *.go LspDocumentFormatSync
+endif
+
+if executable('go-langserver')
+    au User lsp_setup call lsp#register_server({
+        \ 'name': 'go-langserver',
+        \ 'cmd': {server_info->['go-langserver', '-gocodecompletion']},
+        \ 'whitelist': ['go'],
+        \ })
+    autocmd BufWritePre *.go LspDocumentFormatSync
+endif
+
+"Docker
+if executable('docker-langserver')
+    au User lsp_setup call lsp#register_server({
+        \ 'name': 'docker-langserver',
+        \ 'cmd': {server_info->[&shell, &shellcmdflag, 'docker-langserver --stdio']},
+        \ 'whitelist': ['dockerfile'],
+        \ })
 endif
