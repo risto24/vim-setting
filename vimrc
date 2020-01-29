@@ -14,12 +14,12 @@ endif
 set runtimepath+=/home/risto/.cache/dein/repos/github.com/Shougo/dein.vim
 
 " Required:
-if dein#load_state('/home/risto/.cache/dein')
-  call dein#begin('/home/risto/.cache/dein')
+if dein#load_state('~/.cache/dein')
+  call dein#begin('~/.cache/dein')
 
   " Let dein manage dein
   " Required:
-  call dein#add('/home/risto/.cache/dein/repos/github.com/Shougo/dein.vim')
+  call dein#add('~/.cache/dein/repos/github.com/Shougo/dein.vim')
 
   " Add or remove your plugins here like this:
   "call dein#add('Shougo/neosnippet.vim')
@@ -66,9 +66,12 @@ if dein#load_state('/home/risto/.cache/dein')
   call dein#add('mhinz/vim-startify')
   " lsp
   call dein#add('prabirshrestha/async.vim')
-  call dein#add('prabirshrestha/vim-lsp')
   call dein#add('prabirshrestha/asyncomplete.vim')
   call dein#add('prabirshrestha/asyncomplete-lsp.vim')
+  call dein#add('prabirshrestha/vim-lsp')
+  call dein#add('mattn/vim-lsp-settings', {'merged': 0})
+  call dein#add('hrsh7th/vim-vsnip')
+  call dein#add('hrsh7th/vim-vsnip-integ')
 
   " Required:
   call dein#end()
@@ -83,7 +86,6 @@ syntax enable
 if dein#check_install()
   call dein#install()
 endif
-
 
 "End dein Scripts-------------------------
 " クリップボード連携
@@ -152,11 +154,8 @@ colorscheme molokai
 
 set t_Co=256 " iTerm2など既に256色環境なら無くても良い
 set termguicolors
-
-"let g:javascript_plugin_jsdoc = 1
-"let g:javascript_plugin_ngdoc = 1
-"let g:javascript_plugin_flow = 1
-
+let g:rehash256 = 1
+let g:molokai_original = 1
 
 "----------------------------------------------------------
 " カーソル
@@ -167,19 +166,6 @@ set number " 行番号を表示
 " バックスペースキーの有効化
 set backspace=indent,eol,start
 let &t_EI .= "\e[1 q" "カーソル形状変更
-
-"マウス操作の許可
-"set mouse=a
-
-" カーソル形状変更
-"if has('vim_starting')
-"    " 挿入モード時に非点滅の縦棒タイプのカーソル
-"    let &t_SI .= "\e[6 q"
-"    " ノーマルモード時に非点滅のブロックタイプのカーソル
-"    let &t_EI .= "\e[2 q"
-"    " 置換モード時に非点滅の下線タイプのカーソル
-"    let &t_SR .= "\e[4 q"
-"endif
 
 "----------------------------------------------------------
 " タブページ
@@ -302,7 +288,8 @@ command! -bang -nargs=* Rg
 
 " Filesコマンドにもプレビューを出す
 command! -bang -nargs=? -complete=dir Files
-  \ call fzf#vim#files(<q-args>, fzf#vim#with_preview(), <bang>0)
+  "\ call fzf#vim#files(<q-args>, fzf#vim#with_preview(), <bang>0)
+  \ call fzf#vim#files(<q-args>, {'options': ['--layout=reverse', '--info=inline', '--preview', '~/.cache/dein/repos/github.com/junegunn/fzf.vim/bin/preview.sh {}']}, <bang>0)
 "----------------------------------------------------------
 " memolist
 "----------------------------------------------------------
@@ -383,66 +370,27 @@ endfunction
 "----------------------------------------------------------
 " vim-lsp
 "----------------------------------------------------------
-let g:lsp_diagnostics_enabled = 0
-
-" JavaScript
-if executable('typescript-language-server')
-    au User lsp_setup call lsp#register_server({
-        \ 'name': 'typescript-language-server',
-        \ 'cmd': {server_info->[&shell, &shellcmdflag, 'typescript-language-server --stdio']},
-        \ 'root_uri':{server_info->lsp#utils#path_to_uri(lsp#utils#find_nearest_parent_file_directory(lsp#utils#get_buffer_path(), 'tsconfig.json'))},
-        \ 'whitelist': ['typescript', 'typescript.tsx'],
-        \ })
-    au User lsp_setup call lsp#register_server({
-    \ 'name': 'javascript support using typescript-language-server',
-    \ 'cmd': {server_info->[&shell, &shellcmdflag, 'typescript-language-server --stdio']},
-    \ 'root_uri':{server_info->lsp#utils#path_to_uri(lsp#utils#find_nearest_parent_file_directory(lsp#utils#get_buffer_path(), 'package.json'))},
-    \ 'whitelist': ['javascript', 'javascript.jsx', 'javascriptreact'],
-    \ })
+if empty(globpath(&rtp, 'autoload/lsp.vim'))
+  finish
 endif
 
-" CSS
-if executable('css-languageserver')
-    au User lsp_setup call lsp#register_server({
-        \ 'name': 'css-languageserver',
-        \ 'cmd': {server_info->[&shell, &shellcmdflag, 'css-languageserver --stdio']},
-        \ 'whitelist': ['css', 'less', 'sass'],
-        \ })
-endif
+function! s:on_lsp_buffer_enabled() abort
+  setlocal omnifunc=lsp#complete
+  setlocal signcolumn=yes
+  nmap <buffer> gd <plug>(lsp-definition)
+  nmap <buffer> <f2> <plug>(lsp-rename)
+  inoremap <expr> <cr> pumvisible() ? "\<c-y>\<cr>" : "\<cr>"
+endfunction
 
-"HTML
-if executable('html-languageserver')
-  au User lsp_setup call lsp#register_server({
-    \ 'name': 'html-languageserver',
-    \ 'cmd': {server_info->[&shell, &shellcmdflag, 'html-languageserver --stdio']},
-    \ 'whitelist': ['html'],
-  \ })
-endif
+augroup lsp_install
+  au!
+  autocmd User lsp_buffer_enabled call s:on_lsp_buffer_enabled()
+augroup END
+command! LspDebug let lsp_log_verbose=1 | let lsp_log_file = expand('~/lsp.log')
 
-"Go
-if executable('gopls')
-    au User lsp_setup call lsp#register_server({
-        \ 'name': 'gopls',
-        \ 'cmd': {server_info->['gopls']},
-        \ 'whitelist': ['go'],
-        \ })
-    autocmd BufWritePre *.go LspDocumentFormatSync
-endif
-
-if executable('go-langserver')
-    au User lsp_setup call lsp#register_server({
-        \ 'name': 'go-langserver',
-        \ 'cmd': {server_info->['go-langserver', '-gocodecompletion']},
-        \ 'whitelist': ['go'],
-        \ })
-    autocmd BufWritePre *.go LspDocumentFormatSync
-endif
-
-"Docker
-if executable('docker-langserver')
-    au User lsp_setup call lsp#register_server({
-        \ 'name': 'docker-langserver',
-        \ 'cmd': {server_info->[&shell, &shellcmdflag, 'docker-langserver --stdio']},
-        \ 'whitelist': ['dockerfile'],
-        \ })
-endif
+let g:lsp_diagnostics_enabled = 1
+let g:lsp_diagnostics_echo_cursor = 1
+let g:asyncomplete_auto_popup = 1
+let g:asyncomplete_auto_completeopt = 1
+let g:asyncomplete_popup_delay = 200
+let g:lsp_text_edit_enabled = 1
