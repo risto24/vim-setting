@@ -42,9 +42,6 @@ if dein#load_state('~/.cache/dein')
   call dein#add('bronson/vim-trailing-whitespace')
   " 多機能セレクタ
   call dein#add('ctrlpvim/ctrlp.vim')
-  " ファイルツリー
-  call dein#add('scrooloose/nerdtree')
-  call dein#add('jistr/vim-nerdtree-tabs')
   " emmet
   call dein#add('mattn/emmet-vim')
   " pug シンタックスカラー
@@ -101,7 +98,12 @@ set noerrorbells
 set visualbell "ビープ音を視覚表示
 " 新しいウィンドウを右に開く
 set splitright
-
+" ファイラ機能をONにする
+filetype plugin on
+" tree view
+let g:netrw_liststyle = 3
+" 上部に表示される情報を非表示
+let g:netrw_banner = 0
 "----------------------------------------------------------
 " 日時表示
 "----------------------------------------------------------
@@ -261,13 +263,6 @@ let g:user_emmet_leader_key='<c-l>'
 "elzr/vim-json
 "----------------------------------------------------------
 let g:vim_json_syntax_conceal = 0
-
-"----------------------------------------------------------
-" neadtree
-"----------------------------------------------------------
-map <C-n> <plug>NERDTreeTabsToggle<CR>
-let NERDTreeShowHidden = 1
-let g:NERDTreeStatusline = '%#NonText#'
 
 "----------------------------------------------------------
 " winresizer
