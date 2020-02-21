@@ -69,6 +69,9 @@ if dein#load_state('~/.cache/dein')
   call dein#add('mattn/vim-lsp-settings', {'merged': 0})
   call dein#add('hrsh7th/vim-vsnip')
   call dein#add('hrsh7th/vim-vsnip-integ')
+  " Docker
+  call dein#add('skanehira/docker.vim')
+  call dein#add('skanehira/docker-compose.vim')
 
   " Required:
   call dein#end()
@@ -104,6 +107,8 @@ filetype plugin on
 let g:netrw_liststyle = 3
 " 上部に表示される情報を非表示
 let g:netrw_banner = 0
+" プレビューウィンドウを垂直分割で表示する
+let g:netrw_preview=1
 "----------------------------------------------------------
 " 日時表示
 "----------------------------------------------------------
