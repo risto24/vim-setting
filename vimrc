@@ -109,6 +109,9 @@ let g:netrw_liststyle = 3
 let g:netrw_banner = 0
 " プレビューウィンドウを垂直分割で表示する
 let g:netrw_preview=1
+" 矢印でも自動補完をするようにする
+inoremap <expr> <down> ((pumvisible())?("\<C-n>"):("\<down>"))
+inoremap <expr> <up> ((pumvisible())?("\<C-p>"):("\<up>"))
 "----------------------------------------------------------
 " 日時表示
 "----------------------------------------------------------
