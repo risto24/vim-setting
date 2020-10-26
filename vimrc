@@ -11,7 +11,7 @@ if &compatible
 endif
 
 " Required:
-set runtimepath+=/home/risto/.cache/dein/repos/github.com/Shougo/dein.vim
+set runtimepath+=~/.cache/dein/repos/github.com/Shougo/dein.vim
 
 " Required:
 if dein#load_state('~/.cache/dein')
@@ -72,6 +72,8 @@ if dein#load_state('~/.cache/dein')
   " Docker
   call dein#add('skanehira/docker.vim')
   call dein#add('skanehira/docker-compose.vim')
+  " React
+  call dein#add('maxmellon/vim-jsx-pretty')
 
   " Required:
   call dein#end()
@@ -89,9 +91,10 @@ endif
 
 "End dein Scripts-------------------------
 " クリップボード連携
-set clipboard=unnamed,autoselect
-set clipboard&
-set clipboard^=unnamedplus
+"set clipboard=unnamed,autoselect
+"set clipboard&
+"set clipboard^=unnamedplus
+set clipboard+=unnamed
 " バックアップファイルを作らない
 set nobackup
 " スワップファイルを作らない
@@ -112,6 +115,8 @@ let g:netrw_preview=1
 " 矢印でも自動補完をするようにする
 inoremap <expr> <down> ((pumvisible())?("\<C-n>"):("\<down>"))
 inoremap <expr> <up> ((pumvisible())?("\<C-p>"):("\<up>"))
+" ビープを無効
+set visualbell t_vb=
 "----------------------------------------------------------
 " 日時表示
 "----------------------------------------------------------
@@ -163,7 +168,7 @@ autocmd ColorScheme * highlight LineNr ctermbg=none
 colorscheme molokai
 
 set t_Co=256 " iTerm2など既に256色環境なら無くても良い
-set termguicolors
+"set termguicolors
 let g:rehash256 = 1
 let g:molokai_original = 1
 
