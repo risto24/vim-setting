@@ -78,6 +78,8 @@ if dein#load_state('~/.cache/dein')
   " ファイラー
   call dein#add('lambdalisue/fern.vim')
   call dein#add('lambdalisue/fern-hijack.vim')
+  " JavaScript syntax
+  call dein#add('yuezk/vim-js')
 
   " Required:
   call dein#end()
