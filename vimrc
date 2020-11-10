@@ -40,8 +40,6 @@ if dein#load_state('~/.cache/dein')
   call dein#add('Yggdroot/indentLine')
   " 末尾の全角半角空白文字を赤くハイライト
   call dein#add('bronson/vim-trailing-whitespace')
-  " 多機能セレクタ
-  call dein#add('ctrlpvim/ctrlp.vim')
   " emmet
   call dein#add('mattn/emmet-vim')
   " pug シンタックスカラー
@@ -74,6 +72,12 @@ if dein#load_state('~/.cache/dein')
   call dein#add('skanehira/docker-compose.vim')
   " React
   call dein#add('maxmellon/vim-jsx-pretty')
+  call dein#add('mxw/vim-jsx')
+  call dein#add('justinj/vim-react-snippets')
+  call dein#add('jbgutierrez/vim-babel')
+  " ファイラー
+  call dein#add('lambdalisue/fern.vim')
+  call dein#add('lambdalisue/fern-hijack.vim')
 
   " Required:
   call dein#end()
@@ -186,10 +190,10 @@ let &t_EI .= "\e[1 q" "カーソル形状変更
 " タブページ
 "----------------------------------------------------------
 "set showtabline=2 "常にタブを表示させておく
-let s:palette = g:lightline#colorscheme#powerline#palette
-let s:palette.tabline.tabsel = [ [ '#1c1e1e', '#afdf02', 016, 118, 'bold' ] ]
-let s:palette.tabline.middle = [ [ '#f8f8f8', '#1c1e1e', 015, 016, 'bold' ] ]
-unlet s:palette
+"let s:palette = g:lightline#colorscheme#powerline#palette
+"let s:palette.tabline.tabsel = [ [ '#1c1e1e', '#afdf02', 016, 118, 'bold' ] ]
+"let s:palette.tabline.middle = [ [ '#f8f8f8', '#1c1e1e', 015, 016, 'bold' ] ]
+"unlet s:palette
 
 "----------------------------------------------------------
 " 文字
