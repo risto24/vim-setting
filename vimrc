@@ -70,16 +70,14 @@ if dein#load_state('~/.cache/dein')
   " Docker
   call dein#add('skanehira/docker.vim')
   call dein#add('skanehira/docker-compose.vim')
-  " React
+  " React & JavaScript syntax
+  call dein#add('yuezk/vim-js')
   call dein#add('maxmellon/vim-jsx-pretty')
-  call dein#add('mxw/vim-jsx')
   call dein#add('justinj/vim-react-snippets')
   call dein#add('jbgutierrez/vim-babel')
   " ファイラー
   call dein#add('lambdalisue/fern.vim')
   call dein#add('lambdalisue/fern-hijack.vim')
-  " JavaScript syntax
-  call dein#add('yuezk/vim-js')
 
   " Required:
   call dein#end()
@@ -418,3 +416,8 @@ let g:asyncomplete_auto_popup = 1
 let g:asyncomplete_auto_completeopt = 1
 let g:asyncomplete_popup_delay = 200
 let g:lsp_text_edit_enabled = 1
+
+"----------------------------------------------------------
+" Fern
+"----------------------------------------------------------
+noremap <silent> <Leader>. :Fern . -drawer -width=35 -toggle<CR><C-w>=
