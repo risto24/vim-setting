@@ -421,3 +421,4 @@ let g:lsp_text_edit_enabled = 1
 " Fern
 "----------------------------------------------------------
 noremap <silent> <Leader>. :Fern . -drawer -width=35 -toggle<CR><C-w>=
+let g:fern#default_hidden = 1
